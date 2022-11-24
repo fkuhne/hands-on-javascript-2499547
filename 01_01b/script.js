@@ -12,6 +12,8 @@ const mainContent = document.querySelector(".main-content");
 const Card = (data) => {
   const imgData = data[0];
 
+  const date = new Date(imgData.created_at);
+
   const markup = `
     <figure class="image">
       <img
@@ -35,6 +37,16 @@ const Card = (data) => {
             <span class="image__photog">${imgData.user.name}</span>.
           </p>
           <p>
+            Uploaded on <time class="image__date" datetime="${
+              imgData.created_at
+            }">
+              ${date.toLocaleString("default", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}</time>
+          </p>
+          <p> 
             <a href="${imgData.links.self}" class="image__link">
               View it on Unsplash.
             </a>
