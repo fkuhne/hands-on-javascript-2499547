@@ -21,13 +21,22 @@ const mainContent = document.querySelector(".main-content");
 const loadButton = document.querySelector("#load");
 const loader = document.querySelector(".loader");
 
-loadButton.addEventListener("click", () => {
-  loader.classList.toggle("hidden");
-  loadButton.classList.toggle("hidden");
-  setTimeout(() => {
-    mainContent.innerHTML = Cardlist(newData);
-  }, 3000);
-});
+const target = document.querySelector(".cardlist");
+
+const loadCards = (entries) => {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      loader.classList.toggle("hidden");
+      loadButton.classList.toggle("hidden");
+      setTimeout(() => {
+        mainContent.innerHTML = Cardlist(newData);
+      }, 3000);
+    }
+  });
+};
+
+const observer = new IntersectionObserver(loadCards);
+observer.observe(target);
 
 /**
  * Light/dark mode feature.
