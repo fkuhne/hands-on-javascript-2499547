@@ -23,7 +23,26 @@ const tempTranslator = (temp, unit) => {
   }
 };
 
-const weatherCard = (data) => {
+const windSpeedTranslator = (wind, unit) => {
+  if (unit === "imperial") {
+    return {
+      value: wind * 3.28,
+      unit: "ft/s",
+    };
+  } else {
+    return {
+      value: wind,
+      unit: "m/s",
+    };
+  }
+};
+
+const weatherCard = (data, units) => {
+  const temp = tempTranslator(data.main.temp, units).value.toFixed(1);
+  const tempUnit = tempTranslator(data.main.temp, units).unit;
+  const wind = windSpeedTranslator(data.wind.speed, units).value.toFixed(1);
+  const windUnit = windSpeedTranslator(data.wind.speed, units).unit;
+
   return `
     <article class="weathercard">
           <div class="weathercard__meta">
@@ -32,15 +51,11 @@ const weatherCard = (data) => {
   }</div>
           </div>
           <div class="weathercard__temp">
-            <span class="temp">${
-              tempTranslator(data.main.temp).c.toFixed(1)
-            }</span><span class="tempunit">°C</span>
+            <span class="temp">${temp}</span><span class="tempunit">${tempUnit}</span>
           </div>
           <div class="weathercard__wind">
             <div class="weathercard__wind-speed">
-              <span class="speed">${
-                data.wind.speed
-              }</span><span class="windunit">m/s</span>
+              <span class="speed">${wind}</span><span class="windunit">${windUnit}</span>
             </div>
             <div class="weathercard__wind-dir" style="transform:rotate(${
               data.wind.deg + 90
@@ -48,6 +63,7 @@ const weatherCard = (data) => {
                 <span class="screen-reader-text">${data.wind.deg}</span>
             </div>
           </div>
+          <button id="units">Change units</button>
         </article>
     `;
 };
