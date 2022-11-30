@@ -1,6 +1,6 @@
 export default {
   // Get API key from https://home.openweathermap.org/users/sign_up
-  appid: [OpenWeatherAPIkey],
+  appid: "939ad131bea68dcf690d7958b7f69d6f",
   units: "metric",
-  location: "carpinteria,ca,us",
+  location: "london,uk",
 };
